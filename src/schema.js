@@ -11,6 +11,13 @@ module.exports = gql`
     monthRange: [String]!
   }
 
+  type Ranges {
+    minTemp: Float!
+    maxTemp: Float!
+    minDate: String!
+    maxDate: String!
+  }
+
   type Observation {
     location: String!
     date: String!
@@ -28,5 +35,6 @@ module.exports = gql`
     location(id: ID!): Location
     locations: [Location]
     weather(location: String!): [Observation]
+    ranges: Ranges
   }
 `

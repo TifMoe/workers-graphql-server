@@ -62,6 +62,34 @@ module.exports = {
       }
       return months
     },
+    ranges: async (_source, { }, { dataSources }) => {
+      // TODO: Make shared logic DRY across resolvers - there's a better way to do this
+      const keys = await dataSources.workersKV.listKeys(dataSources.locationPrefix)
+
+      // Wait for all the promises to execute fetch of location data from each key
+      const results = await Promise.all(
+        keys.map(async (key) => {
+          const data = await dataSources.workersKV.get(key.name);
+          const result = await JSON.parse(data);
+          return {
+            tempRange: getTempRange(result.values),
+            monthRange: getMonthRange(result.values),
+          }
+        })
+      )
+
+      const minDate = results.reduce((min, location) => location.monthRange[0] < min ? location.monthRange[0] : min, results[0].monthRange[0]);
+      const maxDate = results.reduce((max, location) => location.monthRange[1] > max ? location.monthRange[1] : max, results[0].monthRange[1]);
+      const minTemp = results.reduce((min, location) => location.tempRange[0] < min ? location.tempRange[0] : min, results[0].tempRange[0]);
+      const maxTemp = results.reduce((max, location) => location.tempRange[1] > max ? location.tempRange[1] : max, results[0].tempRange[1]);
+
+      return {
+        minTemp: minTemp,
+        maxTemp: maxTemp,
+        minDate: minDate,
+        maxDate: maxDate,
+      }
+    },
   },
 }
 
