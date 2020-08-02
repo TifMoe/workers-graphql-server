@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install dependencies for frontent build
+        run: npm install --prod --pure-lockfile
+
+      - name: Publish to Cloudflare Workers
+        uses: cloudflare/wrangler-action@1.1.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          wranglerVersion: '1.6.0'
+          environment: 'prod'

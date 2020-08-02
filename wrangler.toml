@@ -1,10 +1,19 @@
-name = "serverless-graphql-server"
-type = "webpack"
 account_id = "661484bfa811d50ad0a7c946485ad9ae"
-workers_dev = true
+type = "webpack"
 webpack_config = "webpack.config.js"
 
-[[kv-namespaces]]
-name = "TEMPDATA"
-binding = "TEMPDATA"
-id = "a8a4db8497e241c58cb4f2466bc6b8a4"
+[env.dev]
+name = "dev-graphql"
+workers_dev = true
+kv-namespaces = [
+  { binding = "TEMPDATA", id = "a8a4db8497e241c58cb4f2466bc6b8a4" }
+]
+
+[env.prod]
+name = "graphql"
+workers_dev = false
+zone_id = "3bd9290f20643845d27b837bf90597ff"
+route = "api.trendingtemps.com/*"
+kv-namespaces = [
+  { binding = "TEMPDATA", id = "a8a4db8497e241c58cb4f2466bc6b8a4" }
+]

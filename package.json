@@ -10,7 +10,8 @@
     "graphql": "^14.2.1"
   },
   "scripts": {
-    "deploy": "wrangler publish"
+    "deploy-prod": "wrangler publish --env prod",
+    "deploy-dev": "wrangler publish --env dev"
   },
   "license": "MIT",
   "main": "src/index.js"
