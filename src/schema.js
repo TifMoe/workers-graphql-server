@@ -6,19 +6,16 @@ module.exports = gql`
 		name: String!
     latitude: Float!
     longitude: Float!
-    months: Int!
-    minTemp: Float!
-    maxTemp: Float!
+    observations: Int!
+    tempRange: [Float]!
+    monthRange: [String]!
   }
 
-  type Locations {
-		locations: [Location]!
-	}
-
-  type Period {
-    location: String
-    month: String
-    year: Int
+  type Observation {
+    location: String!
+    date: String!
+    month: String!
+    year: Int!
     temp: Float!
     minTemp: Float!
     maxTemp: Float!
@@ -27,14 +24,9 @@ module.exports = gql`
     cloudcover: Float!
   }
 
-  type Periods {
-    months: [Period]!
-  }
-
   type Query {
-    getLocation(id: ID!): Location
-    getLocations: Locations
-    getAllLocations: Locations
-    getWeather(location: String!): [Period]
+    location(id: ID!): Location
+    locations: [Location]
+    weather(location: String!): [Observation]
   }
 `

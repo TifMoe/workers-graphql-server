@@ -16,16 +16,12 @@ const createServer = graphQLOptions =>
   new ApolloServer({
     typeDefs,
     resolvers,
-    engine: {    
-      graphVariant: "current"
-    },
     introspection: true,
     dataSources,
   })
 
 const handler = (request, graphQLOptions) => {
   const server = createServer(graphQLOptions)
-  console.log("HERES A THING!!!!!")
   return graphqlCloudflare(() => server.createGraphQLServerOptions(request))(request)
 }
 

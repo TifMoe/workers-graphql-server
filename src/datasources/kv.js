@@ -3,16 +3,10 @@ class WorkersKV {
     return TEMPDATA.get(key)
   }
 
-  async getAllPrefix(prefix) {
+  async listKeys(prefix) {
     const value = await TEMPDATA.list({"prefix": prefix})
     const keys = await value.keys; // [] keys
-    const getLocation = keys.map(async (key) => {
-      const data = await this.get(key);
-      const result = await JSON.parse(data);
-      return result;
-    });
-    const results = await Promise.all(getLocation);
-    return results;
+    return keys
   }
 
   set(key, value, options) {
