@@ -56,7 +56,7 @@ module.exports = {
           maxTemp: result.values[i].maxt,
           precipcover: result.values[i].precipcover,
           precip: result.values[i].precip,
-          cloudcover: result.values[i].precip,
+          cloudcover: result.values[i].cloudcover,
         }
         months.push(month)
       }
