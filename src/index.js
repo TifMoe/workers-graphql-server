@@ -20,13 +20,13 @@ const graphQLOptions = {
   // Enable CORS headers on GraphQL requests
   // Set to `true` for defaults (see `utils/setCors`),
   // or pass an object to configure each header
-  cors: true,
-  // cors: {
-  //   allowCredentials: 'true',
-  //   allowHeaders: 'Content-type',
-  //   allowOrigin: '*',
-  //   allowMethods: 'GET, POST, PUT',
-  // },
+  // cors: true,
+  cors: {
+    allowCredentials: 'true',
+    allowHeaders: 'Content-type',
+    allowOrigin: '*',
+    allowMethods: 'GET, POST, PUT',
+  },
 }
 
 const handleRequest = async request => {
